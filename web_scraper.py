@@ -20,7 +20,7 @@ def scraper(url):
 def find_urls(souped_url):
     unique_urls = set()
     url_regex = r"http[s]?:\/\/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
-    url_a_tags = souped_url.find_all("a", href=True)  # filters out nonhrefs
+    url_a_tags = souped_url.find_all("a", href=True)  # filters out non-hrefs
     for url in url_a_tags:
         if re.search(url_regex, str(url)):
             unique_urls.add(url.get("href"))
@@ -55,10 +55,13 @@ def find_emails(souped_url):
 
 def find_phone_numbers(souped_url):
     unique_phone_numbers = set()
-    phone_number_regex = r"1?\W*([2-9][0-8][0-9])\W*([2-9][0-9]{2})\W*([0-9]{4})(\se?x?t?(\d*))?"
-    for phone_number in souped_url:
-        if re.search(phone_number_regex, str(phone_number)):
-            unique_phone_numbers.add(phone_number)
+    phone_number_regex = re.compile(
+        r"1?\W*([2-9][0-8][0-9])\W*([2-9][0-9]{2})\W*([0-9]{4})(\se?x?t?(\d*))?")
+    all_phone_numbers = phone_number_regex.findall(str(souped_url))
+    for phone_number in all_phone_numbers:
+        if phone_number not in unique_phone_numbers:
+            unique_phone_numbers.add(
+                "({}) {}-{}".format(phone_number[0], phone_number[1], phone_number[2]))
     if not unique_phone_numbers:
         print("No phone numbers found")
     print("\n".join(unique_phone_numbers))
