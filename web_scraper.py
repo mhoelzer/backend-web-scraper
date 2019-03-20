@@ -11,13 +11,14 @@ from bs4 import BeautifulSoup
 
 
 def scraper(url):
-    """does the initial scraping"""
+    """does the initial scraping; to be used with other functions"""
     response = requests.get(url)
     souped_url = BeautifulSoup(response.text, 'html.parser')
     return souped_url
 
 
 def find_urls(souped_url):
+    """finds all the urls because urls are better than talking on the phone"""
     unique_urls = set()
     url_regex = r"http[s]?:\/\/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
     url_a_tags = souped_url.find_all("a", href=True)  # filters out non-hrefs
@@ -31,6 +32,8 @@ def find_urls(souped_url):
 
 
 def find_images(souped_url):
+    """finds all the images because images are better than talking on the
+    phone"""
     unique_images = set()
     images = souped_url.find_all("img", src=True)
     for image in images:
@@ -42,11 +45,14 @@ def find_images(souped_url):
 
 
 def find_emails(souped_url):
+    """finds all the emails because emailing is better than talking on the
+    phone"""
     unique_emails = set()
-    email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
-    for email in souped_url:
+    email_regex = r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)"
+    email_tags = souped_url.find_all("a")
+    for email in email_tags:
         if re.search(email_regex, str(email)):
-            unique_emails.add(email)
+            unique_emails.add(email.get("href").replace("mailto:", ""))
     if not unique_emails:
         print("No emails found")
     print("\n".join(unique_emails))
@@ -54,6 +60,8 @@ def find_emails(souped_url):
 
 
 def find_phone_numbers(souped_url):
+    """finds all the phone numbers because someone might be crazy enough to
+    contact people via phone call"""
     unique_phone_numbers = set()
     phone_number_regex = re.compile(
         r"1?\W*([2-9][0-8][0-9])\W*([2-9][0-9]{2})\W*([0-9]{4})(\se?x?t?(\d*))?")
@@ -77,6 +85,7 @@ def create_parser():
 
 
 def main(args):
+    """runs all the stuffz"""
     parser = create_parser()
     if not args:
         parser.print_usage()
@@ -97,4 +106,4 @@ def main(args):
 
 if __name__ == "__main__":
     # example of cmdln: python scraper.py https://nookpaleo.com
-    print(main(sys.argv[1:]))
+    main(sys.argv[1:])
