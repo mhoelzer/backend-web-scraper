@@ -1,14 +1,14 @@
 <p align="center">
-  <img src=logo.jpg/>
+ <img src=logo.jpg/>
 </p>
 
 # Simple Web Scraper
 
 Today you'll write a command line program to scrape a single web page, extracting any URLs, email addresses, and phone numbers it contains.
 
-1.  Use the [`argparse`](https://docs.python.org/2/library/argparse.html) library to parse a URL passed in as a command line argument.
-2.  Use the [`requests`](http://docs.python-requests.org/en/master/user/quickstart/) library to retrieve the text of the webpage at the specified URL.
-3.  Use the [`re`](https://docs.python.org/2/library/re.html) library to look for email addresses, URLs, and phone numbers included in the page.
+1. Use the [`argparse`](https://docs.python.org/2/library/argparse.html) library to parse a URL passed in as a command line argument.
+2. Use the [`requests`](http://docs.python-requests.org/en/master/user/quickstart/) library to retrieve the text of the webpage at the specified URL.
+3. Use the [`re`](https://docs.python.org/2/library/re.html) library to look for email addresses, URLs, and phone numbers included in the page.
 
 ### Example command
 
@@ -26,16 +26,16 @@ https://6ncn8s99js-flywheel.netdna-ssl.com/wp-content/uploads/2018/02/about-eati
 https://6ncn8s99js-flywheel.netdna-ssl.com/wp-content/uploads/2018/02/about-our-paleo-influenced-diner-downtown-indy.jpg
 https://6ncn8s99js-flywheel.netdna-ssl.com/wp-content/uploads/2018/02/nook-paleo-gluten-free-vegan-menu-options.jpg
 https://6ncn8s99js-flywheel.netdna-ssl.com/wp-content/uploads/2018/02/nook-paleo-private-party-event-room-400x284.jpg
- ...
+  ...
 https://nookpaleo.com/comments/feed/
 https://nookpaleo.com/contact/
 https://nookpaleo.com/faqs/
 https://nookpaleo.com/feed/
 https://nookpaleo.com/hiring/
- ...
+  ...
 https://www.indianapolismonthly.com/dining-blog/the-25-best-tacos-in-indianapolis/
 https://www.instagram.com/nookpaleo/
- ...
+  ...
 
 Phone Numbers
 317-759-3554
